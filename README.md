@@ -9,7 +9,7 @@
 * **Instagram** : [@agungdevx](https://instagram.com/agungdevx)
 
 ### 📊 Repository Stats
-![Views](https://komarev.com/ghit/?username=agungdevx&label=REPOSITORY%20VIEWS&color=0078d7&style=flat-square)
+![Views](https://komarev.com/ghit/?username=agungdevx&repo=Free-Scrape&label=VIEWS&color=blue&style=flat)
 
 ---
 *Educational Purpose Only*
