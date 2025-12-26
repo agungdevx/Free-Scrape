@@ -17,4 +17,4 @@ Don't Forget to Start & Fork this repository
 ![Repo Views](https://img.shields.io/badge/VIEWS-DYNAMIC_COUNTER-00BFFF?style=flat-square)
 
 ---
-*Educational Purpose Only*
+Educational Purpose Only
