@@ -71,15 +71,11 @@ const PinDL = {
 module.exports = PinDL;
 
 
-/** Bonus sama aja sih result url nya 
+/** Bonus sama aja sih result url nya cuman beda domain web doang jadikan fallback aja kalo domain yang atas Mokad ada gantinya ini
+
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-/**
- * SavePinMedia Downloader Scraper
- * Engine: HTML Parsing
- * Owners: AgungDevX
- */
 const SavePin = {
     config: {
         api: 'https://savepinmedia.com/php/api/api.php',
