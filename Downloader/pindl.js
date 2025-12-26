@@ -83,9 +83,6 @@ const SavePin = {
         ua: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     },
 
-    /**
-     * @param {String} url - Link Pinterest
-     */
     download: async (url) => {
         try {
             if (!url) return { status: 400, success: false, owners: "AgungDevX", message: "URL required" };
