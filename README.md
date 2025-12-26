@@ -1,10 +1,15 @@
-# Free-Scrape
-Free scrape results storage for application or WhatsApp bot purposes
+# 📦 Free-Scrape
 
-# Info
-- Owner : AgungDevX
-- Portfolio : [Click Me](https://agungdevx.my.id) -> Coming Soon 
-- Instagram : [Click Ms](https://instagram.com/agungdevx)
+> Kumpulan hasil *scraping* haratis pikeun kaperluan integrasi aplikasi atanapi bot WhatsApp.
 
-![Views](https://komarev.com/ghit/?username=agungdevx&repo=https://github.com/agungdevx/Free-Scrape/tree/main)
+---
 
+### 👤 Author
+* **Developer** : [AgungDevX](https://agungdevx.my.id)
+* **Instagram** : [@agungdevx](https://instagram.com/agungdevx)
+
+### 📊 Repository Stats
+![Views](https://komarev.com/ghit/?username=agungdevx&label=REPOSITORY%20VIEWS&color=0078d7&style=flat-square)
+
+---
+*Educational Purpose Only*
