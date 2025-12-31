@@ -1,5 +1,5 @@
 const https = require('https');
-const url = 'https://www.rumahotp.com/api/v1/h2h/check/rekening?bank_code=dana&account_number=085643115199';
+const url = 'https://www.rumahotp.com/api/v1/h2h/check/rekening?bank_code=dana&account_number=08xxx';
 
 https.get(url, (resp) => {
   let data = '';
