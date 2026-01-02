@@ -6,9 +6,10 @@ Don't Forget to Start & Fork this repository
 ---
 
 #### Author
-* **Developer** : [AgungDevX](https://agungdevx.my.id)
-* **Instagram** : [@agungdevx](https://instagram.com/agungdevx)
-* **WhatsApp Channel** : [Channel](https://whatsapp.com/channel/0029VbBuiBx3wtbBplt2tl3c)
+* **Developer** :: [AgungDevX](https://agungdevx.my.id)
+* **Instagram** :: [@agungdevx](https://instagram.com/agungdevx)
+* **WhatsApp Scrape Channel** :: [Channel](https://whatsapp.com/channel/0029VbBuiBx3wtbBplt2tl3c)
+* **WhatsApp TechBOT Channel** :: [Channel](https://whatsapp.com/channel/0029VbBjjNf7j6g6WcADDQ3f)
 
 ---
 
