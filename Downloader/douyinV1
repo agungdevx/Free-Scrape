@@ -1,0 +1,51 @@
+const axios = require('axios');
+
+/**
+ * SnapVideoTools Scraper
+ * @author AgungDevX
+ */
+async function snapScraper(url) {
+   try {
+      if (!url) return { author: 'AgungDevX', status: false, msg: 'Mana URL-na mang?' };
+
+      const { data } = await axios.post('https://snapvideotools.com/id/api/snap', 
+         { text: url },
+         {
+            headers: {
+               'Content-Type': 'application/json',
+               'Accept': 'application/json, text/javascript, */*; q=0.01',
+               'X-Requested-With': 'XMLHttpRequest',
+               'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+               'Referer': 'https://snapvideotools.com/id/douyin-downloader'
+            }
+         }
+      );
+
+      if (data.code !== 0 || !data.data) {
+         return { author: 'AgungDevX', status: false, msg: 'Gagal nyokot data ti SnapVideo!' };
+      }
+
+      const res = data.data;
+      return {
+         author: 'AgungDevX',
+         status: true,
+         result: {
+            title: res.title || 'No Title',
+            platform: res.platformName,
+            thumbnail: res.cover,
+            // Misahkeun mana video mana gambar
+            medias: res.mediaUrls.map(m => ({
+               type: m.type,
+               url: m.url,
+               ext: m.suffix
+            }))
+         }
+      };
+   } catch (e) {
+      return { author: 'AgungDevX', status: false, msg: e.message };
+   }
+}
+
+// --- TEST ---
+const link = 'https://www.douyin.com/video/7585971765328497958';
+snapScraper(link).then(res => console.log(JSON.stringify(res, null, 2)));
