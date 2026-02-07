@@ -101,3 +101,12 @@ const query = process.argv.slice(2).join(' ') || "Halo";
 simi.chat(query).then(res => {
     process.stdout.write(JSON.stringify(res, null, 2));
 });
+
+// Hasil Json'
+/**
+{
+  "status": true,
+  "creator": "AgungDevX",
+  "result": "Dih, apaan sih lo? Ga minat ah. Malu-maluin. Heleh."
+}
+**/
