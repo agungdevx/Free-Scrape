@@ -1,0 +1,90 @@
+const axios = require('axios');
+const cheerio = require('cheerio');
+
+/**
+ * SNAPTIK CX SCRAPER
+ * @param {String} url - Link Video TikTok
+ * @creator AgungDevX
+ */
+async function snaptikDown(url) {
+    try {
+        console.log("[-] Nyeken link video...");
+
+        // 1. Data Form dumasar screenshot Payload
+        const boundary = "----WebKitFormBoundary" + Math.random().toString(36).substring(2);
+        let data = `--${boundary}\r\n`;
+        data += `Content-Disposition: form-data; name="type"\r\n\r\ntiktokVideo\r\n`;
+        data += `--${boundary}\r\n`;
+        data += `Content-Disposition: form-data; name="url"\r\n\r\n${url}\r\n`;
+        data += `--${boundary}\r\n`;
+        // Hash ieu biasana statik atawa dironjatkeun ku JS client
+        data += `Content-Disposition: form-data; name="hash"\r\n\r\nf02bcde7c18ae1f002e293de6573b8f5\r\n`;
+        data += `--${boundary}--\r\n`;
+
+        // 2. Nembak API Snaptik
+        const response = await axios.post('https://snaptik.cx/en/check/', data, {
+            headers: {
+                'Content-Type': `multipart/form-data; boundary=${boundary}`,
+                'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36',
+                'Referer': 'https://snaptik.cx/',
+                'Origin': 'https://snaptik.cx',
+                // Trik ngakal limit IP
+                'X-Forwarded-For': Array(4).fill(0).map(() => Math.floor(Math.random() * 255)).join('.')
+            }
+        });
+
+        // 3. Parsing HTML Response
+        const $ = cheerio.load(response.data);
+        const results = [];
+
+        // Nyokot link download tina tag <a> di jero .down-right
+        $('.down-right a').each((i, el) => {
+            const link = $(el).attr('href');
+            if (link && link !== '/') {
+                results.push(link.startsWith('http') ? link : 'https://cdn.snaptik.cx' + link);
+            }
+        });
+
+        if (results.length === 0) throw new Error("Link download teu kapanggih!");
+
+        return {
+            status: true,
+            creator: "AgungDevX",
+            result: {
+                title: $('.user-fullname').text().trim() || "TikTok Video",
+                username: $('.user-username').text().trim(),
+                thumbnail: $('.user-avatar img').attr('src'),
+                video_url: results[0], // Link HD biasana nu kahiji
+                backup_url: results[1] || null
+            }
+        };
+
+    } catch (err) {
+        return { 
+            status: false, 
+            creator: "AgungDevX", 
+            message: err.response ? "Kena Limit/Bot Filter" : err.message 
+        };
+    }
+}
+
+// TESTER
+const tiktokUrl = "https://www.tiktok.com/@cikaseiska/video/7379107227363200261";
+snaptikDown(tiktokUrl).then(res => console.log(JSON.stringify(res, null, 2)));
+
+/** 
+*** Hasil Json' 
+***
+[-] Nyeken link video...
+{
+  "status": true,
+  "creator": "AgungDevX",
+  "result": {
+    "title": "#fyp #foryoupage #masukberanda #masukberandafyp #fypシ゚viral #fypdong #viral #bandunghits #cikaseiska #foryou #fypage #viralvideo",
+    "username": "Cika",
+    "thumbnail": "https://p16-common-sign.tiktokcdn-us.com/tos-maliva-p-0068/1aeb432c19984b66af49dffee6e039f0_1718082291~tplv-tiktokx-origin.image?dr=9636&x-expires=1770703200&x-signature=U1UiLmhax3WlQNlymOPd04T0qA0%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=useast5",
+    "video_url": "https://cdn.snaptik.cx/?token=aHR0cHM6Ly92MTYtd2ViYXBwLXByaW1lLnVzLnRpa3Rvay5jb20vdmlkZW8vdG9zL3VzZWFzdDJhL3Rvcy11c2Vhc3QyYS12ZS0wMDY4YzAwNC9vY2xmSUJuRWpTOWZjVXhYMmdRN2RFUXpJQTRNOW5EaHZldkNGQy8/YT0xOTg4JmJ0aT1PRHN6TldZdU1ERTYmY2g9MCZjcj0zJmRyPTAmbHI9YWxsJmNkPTAlN0MwJTdDMCU3QyZjdj0xJmJyPTIxNjYmYnQ9MTA4MyZjcz0wJmRzPTYmZnQ9NEtKTXlNem04Wm1vMHNKRHh4NGpWWE1vZHBXcktzZC4mbWltZV90eXBlPXZpZGVvX21wNCZxcz0wJnJjPVpUc3phR2s3TnpRM096UTFPRFpvT0VCcGFubDBPbTA1Y2pwM2N6TXpOemN6TTBBMFlETmdNaTB2TmpBeE1UUXhMaTh2WVNOZmNHdHlNbVJyYVdkZ0xTMWtNVFp6Y3clM0QlM0QmYnRhZz1lMDAwYjAwMDAmZXhwaXJlPTE3NzA3MDUyOTkmbD0yMDI2MDIwODA2MzQ1MEQwMzY2MTNDRTY2OUEyOTc2ODUwJnBseV90eXBlPTImcG9saWN5PTImc2lnbmF0dXJlPTMwNjY1YjQxMzI3YWMyNzkzYWFhZWE0MGMxNjlkYWQzJnRrPXR0X2NoYWluX3Rva2Vu",
+    "backup_url": "https://cdn.snaptik.cx/?token=aHR0cHM6Ly92MTYtd2ViYXBwLXByaW1lLnVzLnRpa3Rvay5jb20vdmlkZW8vdG9zL3VzZWFzdDJhL3Rvcy11c2Vhc3QyYS12ZS0wMDY4YzAwNC9vY2xmSUJuRWpTOWZjVXhYMmdRN2RFUXpJQTRNOW5EaHZldkNGQy8/YT0xOTg4JmJ0aT1PRHN6TldZdU1ERTYmY2g9MCZjcj0zJmRyPTAmbHI9YWxsJmNkPTAlN0MwJTdDMCU3QyZjdj0xJmJyPTIxNjYmYnQ9MTA4MyZjcz0wJmRzPTYmZnQ9NEtKTXlNem04Wm1vMHNKRHh4NGpWWE1vZHBXcktzZC4mbWltZV90eXBlPXZpZGVvX21wNCZxcz0wJnJjPVpUc3phR2s3TnpRM096UTFPRFpvT0VCcGFubDBPbTA1Y2pwM2N6TXpOemN6TTBBMFlETmdNaTB2TmpBeE1UUXhMaTh2WVNOZmNHdHlNbVJyYVdkZ0xTMWtNVFp6Y3clM0QlM0QmYnRhZz1lMDAwYjAwMDAmZXhwaXJlPTE3NzA3MDUyOTkmbD0yMDI2MDIwODA2MzQ1MEQwMzY2MTNDRTY2OUEyOTc2ODUwJnBseV90eXBlPTImcG9saWN5PTImc2lnbmF0dXJlPTMwNjY1YjQxMzI3YWMyNzkzYWFhZWE0MGMxNjlkYWQzJnRrPXR0X2NoYWluX3Rva2Vu"
+  }
+}
+**/
